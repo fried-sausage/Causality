@@ -107,7 +107,7 @@ Hint Resolve
   independence_is_irreflexive
   independence_is_symmetric : event.
 
-Lemma incosistency_of_syncronisation_and_precedence `{Event} :
+Lemma incompatibility_of_syncronisation_and_precedence `{Event} :
   forall x y : universe, x =:= y -> x < y -> False.
 Proof.
   intros x y H1 H2. elim H2. intros H21 H22.
@@ -115,37 +115,37 @@ Proof.
 Qed.
 
 Hint Resolve
-  incosistency_of_syncronisation_and_precedence : event.
+  incompatibility_of_syncronisation_and_precedence : event.
 
-Proposition incosistency_of_syncronisation_and_exclusion `{Event} :
+Proposition incompatibility_of_syncronisation_and_exclusion `{Event} :
   forall x y : universe, x =:= y -> x # y -> False.
 Proof.
   intros x y H1 H2. elim H2;
-  apply incosistency_of_syncronisation_and_precedence;
+  apply incompatibility_of_syncronisation_and_precedence;
   assumption || apply synchronisation_is_symmetric; assumption.
 Qed.
 
-Proposition incosistency_of_syncronisation_and_independence `{Event} :
+Proposition incompatibility_of_syncronisation_and_independence `{Event} :
   forall x y : universe, x =:= y -> x !! y -> False.
 Proof.
   intros x y H1 H2. elim H2. intros H3 H4.
   pose (H11 := proj1 H1). contradiction.
 Qed.
 
-Lemma incosistency_of_precedence_and_independence `{Event} :
+Lemma incompatibility_of_precedence_and_independence `{Event} :
   forall x y : universe, x < y -> x !! y -> False.
 Proof.
   intros x y H1 H2. elim H2. intros H3 H4.
   pose (H11 := proj1 H1). contradiction.
 Qed.
 
-Proposition incosistency_of_exclusion_and_independence `{Event} :
+Proposition incompatibility_of_exclusion_and_independence `{Event} :
   forall x y : universe, x # y -> x !! y -> False.
 Proof.
   intros x y H1. elim H1; intro H2;
   [ idtac |
     intro H3; apply independence_is_symmetric in H3; revert H3 ];
-  apply incosistency_of_precedence_and_independence; assumption.
+  apply incompatibility_of_precedence_and_independence; assumption.
 Qed.
 
 Lemma causality_distinguishes_exclusion `{Event} :
