@@ -1,8 +1,4 @@
-(* Uncomment the string specifying the needed load path *)
-Add LoadPath "/home/zholtkevych/OneDrive/Causality/8.6".
-(*
-Add LoadPath "C:\Users\user\OneDrive\Causality\8.7.2".
-*)
+(* path to directory containing scripts *)
 Require Import EventPreliminaries.
 
 Class Event :=
