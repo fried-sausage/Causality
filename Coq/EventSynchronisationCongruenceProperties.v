@@ -1,4 +1,4 @@
-Add LoadPath "/home/zholtkevych/OneDrive/Causality/8.6".
+Add LoadPath "path to directory containing scripts".
 Require Import EventPreliminaries.
 Require Import EventDefinitions.
 Require Import EventRelationFacts.
