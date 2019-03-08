@@ -1,4 +1,4 @@
-(* path to directory containing scripts *)
+Add LoadPath "path to directory containing scripts".
 Require Import EventPreliminaries.
 
 Class Event :=
