@@ -107,48 +107,40 @@ Hint Resolve
   independence_is_irreflexive
   independence_is_symmetric : event.
 
-Lemma incompatibility_of_syncronisation_and_precedence `{Event} :
-  forall x y : universe, x =:= y -> x < y -> False.
+Proposition incompatibility_of_syncronisation_and_precedence `{Event} :
+  forall x y : universe, x =:= y /\ x < y -> False.
 Proof.
-  intros x y H1 H2. elim H2. intros H21 H22.
-  pose (H12 := proj2 H1). contradiction.
+  intros x y H0. pose (H01 := proj1 H0). pose (H02 := proj2 H0).
+  pose (H012 := proj2 H01). pose (H022 := proj2 H02). contradiction.
 Qed.
 
 Hint Resolve
   incompatibility_of_syncronisation_and_precedence : event.
 
 Proposition incompatibility_of_syncronisation_and_exclusion `{Event} :
-  forall x y : universe, x =:= y -> x # y -> False.
+  forall x y : universe, x =:= y /\ x # y -> False.
 Proof.
-  intros x y H1 H2. elim H2;
-  apply incompatibility_of_syncronisation_and_precedence;
-  assumption || apply synchronisation_is_symmetric; assumption.
+  intros x y H0. pose (H01 := proj1 H0). pose (H02 := proj2 H0).
+  pose (H011 := proj1 H01). pose (H012 := proj2 H01).
+  elim H02; intro H3; pose (H32 := proj2 H3); contradiction.
 Qed.
 
 Proposition incompatibility_of_syncronisation_and_independence `{Event} :
-  forall x y : universe, x =:= y -> x !! y -> False.
+  forall x y : universe, x =:= y /\ x !! y -> False.
 Proof.
-  intros x y H1 H2. elim H2. intros H3 H4.
-  pose (H11 := proj1 H1). contradiction.
-Qed.
-
-Lemma incompatibility_of_precedence_and_independence `{Event} :
-  forall x y : universe, x < y -> x !! y -> False.
-Proof.
-  intros x y H1 H2. elim H2. intros H3 H4.
-  pose (H11 := proj1 H1). contradiction.
+  intros x y H0. pose (H01 := proj1 H0). pose (H02 := proj2 H0).
+  pose (H011 := proj1 H01). pose (H021 := proj1 H02). contradiction.
 Qed.
 
 Proposition incompatibility_of_exclusion_and_independence `{Event} :
-  forall x y : universe, x # y -> x !! y -> False.
+  forall x y : universe, x # y /\ x !! y -> False.
 Proof.
-  intros x y H1. elim H1; intro H2;
-  [ idtac |
-    intro H3; apply independence_is_symmetric in H3; revert H3 ];
-  apply incompatibility_of_precedence_and_independence; assumption.
+  intros x y H0. pose (H01 := proj1 H0). pose (H02 := proj2 H0).
+  pose (H021 := proj1 H02). pose (H022 := proj2 H02).
+  elim H01; intro H1; pose (H11 := proj1 H1); contradiction.
 Qed.
 
-Lemma causality_distinguishes_exclusion `{Event} :
+Proposition causality_distinguishes_exclusion `{Event} :
   forall x y : universe, x # y -> x << y -> x < y.
 Proof.
   intros x y H1 H2. elim H1; intro H3.
@@ -157,9 +149,11 @@ Proof.
     pose (H32 := proj2 H3). contradiction.
 Qed.
 
+Definition ixsDecomposition `{Event} : Prop :=
+  forall x y : universe, x !! y \/ x # y \/ x =:= y.
+
 Lemma decidable_causality_ensures_ixsDecomposition `{Event} :
-  Decidable universe causality ->
-    forall x y : universe, x !! y \/ x # y \/ x =:= y.
+  Decidable universe causality -> ixsDecomposition.
 Proof.
   intros H0 x y. elim H0 with x y; intro H1.
   - right. elim H0 with y x; intro H2;
@@ -169,8 +163,7 @@ Proof.
 Qed.
 
 Lemma ixsDecomposition_ensures_decidability_of_causality `{Event} :
-  (forall x y : universe, x !! y \/ x # y \/ x =:= y) ->
-    Decidable universe causality.
+  ixsDecomposition -> Decidable universe causality.
 Proof.
   intro H0. unfold Decidable. intros x y. elim (H0 x y); intro H1.
   - right. pose (H11 := proj1 H1). assumption.
@@ -181,8 +174,7 @@ Proof.
 Qed.
 
 Theorem decidable_causality_is_equivalent_to_ixsDecomposition `{Event}:
-  Decidable universe causality <->
-    forall x y : universe, x !! y \/ x # y \/ x =:= y.
+  Decidable universe causality <-> ixsDecomposition.
 Proof.
   split;
   [ apply decidable_causality_ensures_ixsDecomposition |
