@@ -1,8 +1,8 @@
 Add LoadPath "path to directory containing scripts".
 Require Import EventPreliminaries.
 
-Class Event :=
-  {  universe : Type ;
+Class Event {A : Type} :=
+  {  universe := A ;
      causality : BiRel universe ;
   (* Constraints *)
     causality_constraint (* causality is a preorder *) :
