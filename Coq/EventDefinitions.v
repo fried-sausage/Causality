@@ -44,6 +44,6 @@ Open Scope event_scope.
 Class EventMorphism {A B : Type} `{Event A} `{Event B} (f : A -> B) :=
   {  arrow := f ;
   (* Constraints *)
-    preserving_sync : forall x y : A, x =:= y -> arrow x =:= arrow y ;
-    preserving_precedence : forall x y : A, x < y -> arrow x < arrow y
+    preserving_causality : forall x y : A, x << y -> arrow x << arrow y ;
+    preserving_exclusion : forall x y : A, x # y -> arrow x # arrow y
   }.
