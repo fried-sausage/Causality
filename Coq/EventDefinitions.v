@@ -1,10 +1,10 @@
-Add LoadPath "path to directory containing scripts".
+Add LoadPath "path to the directory containing library files".
 Require Import EventPreliminaries.
 
 Class Event {A : Type} :=
   {  universe := A ;
      causality : BiRel universe ;
-  (* Constraints *)
+  (* Constraint *)
     causality_constraint (* causality is a preorder *) :
       Preorder universe causality ;
   (* Derived relations *)
@@ -25,9 +25,8 @@ Proof. unfold Reflexive. intro x. apply causality_constraint. Qed.
 Proposition causality_is_transitive `{Event}: Transitive universe causality.
 Proof. unfold Transitive. intro x. apply causality_constraint. Qed.
 
-Hint Resolve
-  causality_is_reflexive
-  causality_is_transitive : event.
+Hint Resolve causality_is_reflexive : event.
+Hint Resolve causality_is_transitive : event.
 
 Notation (* x causes y *) "x << y" := (causality x y)
   (at level 70) : event_scope.
@@ -40,3 +39,11 @@ Notation (* x and y are mutually exclusive *) "x # y" := (exclusion x y)
 Notation (* x and y are independent *) "x !! y" := (independence x y)
   (at level 70) : event_scope.
 
+Open Scope event_scope.
+
+Class EventMorphism {A B : Type} `{Event A} `{Event B} (f : A -> B) :=
+  {  arrow := f ;
+  (* Constraints *)
+    preserving_sync : forall x y : A, x =:= y -> arrow x =:= arrow y ;
+    preserving_precedence : forall x y : A, x < y -> arrow x < arrow y
+  }.

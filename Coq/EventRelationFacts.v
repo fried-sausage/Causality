@@ -1,4 +1,4 @@
-Add LoadPath "path to directory containing scripts".
+Add LoadPath "path to the directory containing library files".
 Require Import EventPreliminaries.
 Require Import EventDefinitions.
 Open Scope event_scope.
@@ -34,11 +34,10 @@ Proof.
   split; assumption.
 Qed.
 
-Hint Resolve
-  synchronisation_implies_causality
-  synchronisation_is_reflexive
-  synchronisation_is_transitive
-  synchronisation_is_symmetric : event.
+Hint Resolve synchronisation_implies_causality : event.
+Hint Resolve synchronisation_is_reflexive : event.
+Hint Resolve synchronisation_is_transitive : event.
+Hint Resolve synchronisation_is_symmetric : event.
 
 Proposition synchronisation_is_equivalence `{Event} :
   Equivalence universe synchronisation.
@@ -65,9 +64,8 @@ Proof.
   - contradict H4. apply causality_is_transitive with x; assumption.
 Qed.
 
-Hint Resolve
-  precedence_is_irreflexive
-  precedence_is_transitive : event.
+Hint Resolve precedence_is_irreflexive : event.
+Hint Resolve precedence_is_transitive : event.
 
 Proposition precedence_is_strictOrder `{Event} :
   StrictOrder universe precedence.
@@ -81,9 +79,8 @@ Proposition exclusion_is_symmetric `{Event} :
   Symmetric universe exclusion.
 Proof. intros x y H0. elim H0; intro H1; [ right | left ]; assumption. Qed.
 
-Hint Resolve
-  exclusion_is_irreflexive
-  exclusion_is_symmetric : event.
+Hint Resolve exclusion_is_irreflexive : event.
+Hint Resolve exclusion_is_symmetric : event.
 
 Proposition independence_is_irreflexive `{Event} :
   Irreflexive universe independence.
@@ -99,9 +96,8 @@ Proof.
   split; assumption.
 Qed.
 
-Hint Resolve
-  independence_is_irreflexive
-  independence_is_symmetric : event.
+Hint Resolve independence_is_irreflexive : event.
+Hint Resolve independence_is_symmetric : event.
 
 Proposition incompatibility_of_syncronisation_and_precedence `{Event} :
   forall x y : universe, x =:= y /\ x < y -> False.

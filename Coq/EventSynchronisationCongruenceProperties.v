@@ -1,4 +1,4 @@
-Add LoadPath "path to directory containing scripts".
+Add LoadPath "path to the directory containing library files".
 Require Import EventPreliminaries.
 Require Import EventDefinitions.
 Require Import EventRelationFacts.
