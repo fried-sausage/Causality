@@ -1,6 +1,5 @@
-Add LoadPath "path to the directory containing library files".
-Require Import EventPreliminaries.
-Require Import EventDefinitions.
+From EP Require Import EventPreliminaries.
+From EP Require Import EventDefinitions.
 Open Scope event_scope.
 
 

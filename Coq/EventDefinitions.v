@@ -1,5 +1,4 @@
-Add LoadPath "path to the directory containing library files".
-Require Import EventPreliminaries.
+From EP Require Import EventPreliminaries.
 
 Class Event {A : Type} :=
   {  universe := A ;
