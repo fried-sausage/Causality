@@ -1,5 +1,6 @@
 From EP Require Import EventPreliminaries.
 
+
 Class Event {A : Type} :=
   {  universe := A ;
      causality : BiRel universe ;

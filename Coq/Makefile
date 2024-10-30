@@ -45,7 +45,7 @@ HASNATDYNLINK     := $(COQMF_HASNATDYNLINK)
 OCAMLWARN         := $(COQMF_WARN)
 
 Makefile.conf: _CoqProject
-	coq_makefile -f _CoqProject EventCongruenceProperties.v EventDefinitions.v EventMorphisms.v EventPreliminaries.v EventRelationFacts.v -o Makefile
+	coq_makefile -f _CoqProject EventCongruenceProperties.v EventDefinitions.v EventMorphisms.v EventPreliminaries.v EventRelationFacts.v Example.v -o Makefile
 
 # This file can be created by the user to hook into double colon rules or
 # add any other Makefile code he may need

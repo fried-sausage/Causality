@@ -6,7 +6,7 @@ Axiom eta_conversion :
 Hint Resolve eta_conversion : event.
 
 Section EventPreliminaries.
-Variable U : Type.
+  Variable U : Type.
 
   Definition BiRel : Type := U -> U -> Prop.
 
